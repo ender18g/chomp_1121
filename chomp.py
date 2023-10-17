@@ -8,6 +8,9 @@ WIDTH = 800
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+# load our players (fish)
+puffer_fish = pygame.image.load('assets/images/puffer_fish.png')
+
 # make a background
 background = pygame.Surface((WIDTH,HEIGHT))
 # Fill it with a beautiful blue
@@ -19,7 +22,6 @@ pygame.draw.rect(background, (250, 192, 85), (0,HEIGHT-sand_height, WIDTH, sand_
 # draw the background on the screen
 screen.blit(background, (0,0))
 
-
 running = True
 
 while running:
@@ -29,7 +31,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # RENDER YOUR GAME HERE
+    # Add a fish and blit it to the screen!
+    screen.blit(puffer_fish,(WIDTH/2, HEIGHT/2))
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
