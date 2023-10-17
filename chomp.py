@@ -14,7 +14,7 @@ background = pygame.Surface((WIDTH,HEIGHT))
 background.fill((52, 140, 235)) # fill it with blue
 # Make a sandy rectangle
 sand_height = 100
-pygame.draw.rect(background, (250, 192, 85), (0,0, sand_height, WIDTH) )
+pygame.draw.rect(background, (250, 192, 85), (0,HEIGHT-sand_height, WIDTH, sand_height) )
 
 # draw the background on the screen
 screen.blit(background, (0,0))
