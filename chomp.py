@@ -1,28 +1,7 @@
 # Example file showing a basic pygame "game loop"
 import pygame
 from helpers import *
-
-import random
-class Fish():
-    def __init__(self,screen):
-        self.image = pygame.image.load('assets/images/fishTile_079.png')
-        self.image = pygame.transform.flip(self.image, 1,0)
-        self.speed = random.randint(1,5)
-        self.x = screen.get_width()
-        self.y = random.randint(0,screen.get_height())
-        self.screen = screen
-
-    def update(self):
-        # move the fish to the left
-        self.x -=self.speed
-        if self.x<0:
-            self.x = self.screen.get_width()
-
-    def draw(self):
-        # blit the fish on the screen
-        self.screen.blit(self.image, (self.x,self.y))
-
-
+from fish import Fish
 
 # pygame setup
 pygame.init()
@@ -41,24 +20,15 @@ print(pygame.font.get_fonts())
 # declare a Font
 game_font = pygame.font.SysFont('impact', 120)
 
-blue_fish_img = pygame.image.load('assets/images/fishTile_077.png')
-blue_fish_img = pygame.transform.flip(blue_fish_img,1,0)
-blue_fish_x = WIDTH
+num_fish = 100
 
-fish1 = Fish(screen)
-
-
+# make our fish
+fish_list = [Fish(screen) for n in range(num_fish)]
 
 running = True
 while running:
     # move my fish to the left by 1 pixel
-    blue_fish_x -=3
-    fish1.update()
-
-    # make sure my fish is not off the left of the screen
-    if blue_fish_x <= 0-blue_fish_img.get_width():
-        blue_fish_x=WIDTH
-
+    [f.update() for f in fish_list]
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -72,9 +42,8 @@ while running:
     font_surface = game_font.render('CHOMP',1,(199, 23, 4))
     center_surfaces(screen, font_surface)
 
-    # blit our blue fish
-    screen.blit(blue_fish_img, (blue_fish_x, HEIGHT/2))
-    fish1.draw()
+    # blit our fish
+    [f.draw() for f in fish_list]
 
     clock.tick(60) # run at 60 FPS
 
