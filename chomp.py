@@ -20,15 +20,18 @@ print(pygame.font.get_fonts())
 # declare a Font
 game_font = pygame.font.SysFont('impact', 120)
 
-num_fish = 100
+# make our fish group
+fish_group = pygame.sprite.Group()
 
-# make our fish
-fish_list = [Fish(screen) for n in range(num_fish)]
+# make fish and add to group
+num_fish = 100
+[fish_group.add(Fish(screen)) for n in range(num_fish) ]
+
 
 running = True
 while running:
-    # move my fish to the left by 1 pixel
-    [f.update() for f in fish_list]
+    # update my fish
+    fish_group.update()
 
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -42,8 +45,9 @@ while running:
     font_surface = game_font.render('CHOMP',1,(199, 23, 4))
     center_surfaces(screen, font_surface)
 
-    # blit our fish
-    [f.draw() for f in fish_list]
+    # draw our fish
+    fish_group.draw(screen)
+
 
     clock.tick(60) # run at 60 FPS
 
