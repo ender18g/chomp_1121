@@ -10,7 +10,7 @@ class Fish(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # change these values
         self.x = screen.get_width()
-        self.rect.y = random.randint(0, screen.get_height())
+        self.rect.y = random.randint(100, screen.get_height())
         self.screen = screen
 
     def update(self):
