@@ -6,11 +6,11 @@ class Boat(pygame.sprite.Sprite):
         super().__init__()
         #self.image = pygame.Surface((150,50))
         #self.image.fill((0,0,220))
-        self.image = pygame.image.load('assets/images/ship.png')
-        self.image = pygame.transform.scale_by(self.image, 0.15)
+        self.image = pygame.image.load('assets/images/boat.png')
+        self.image = pygame.transform.scale_by(self.image, 0.2)
         self.rect = self.image.get_rect()
         self.rect.x = screen.get_width()/2
-        self.rect.y = 20
+        self.rect.y = 0
         self.velocity = -1
 
     def update(self):

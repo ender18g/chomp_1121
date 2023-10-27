@@ -50,7 +50,7 @@ while running:
             if event.key == pygame.K_DOWN:
                 # if less than 3 grenades exist drop a grenade if you get a space
                 if len(grenade_group) < 3:
-                    grenade_group.add(Grenade(my_boat.rect.midbottom))
+                    grenade_group.add(Grenade(my_boat.rect.midbottom, fish_group))
             if event.key ==pygame.K_SPACE:
                 # spacebar detonates all grenades
                 [g.boom() for g in grenade_group]
