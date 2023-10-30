@@ -20,6 +20,10 @@ background = make_background(screen)
 print(pygame.font.get_fonts())
 # declare a Font
 game_font = pygame.font.SysFont('impact', 120)
+score_font = pygame.font.SysFont('impact', 20)
+
+# create a score variable (it is a list so we can pass with reference)
+score = [0]
 
 # make our fish group
 fish_group = pygame.sprite.Group()
@@ -31,8 +35,8 @@ boat_group = pygame.sprite.Group()
 boat_group.add(my_boat)
 
 # make fish and add to group
-num_fish = 100
-[fish_group.add(Fish(screen)) for n in range(num_fish) ]
+num_fish = 30
+[fish_group.add(Fish(screen,score)) for n in range(num_fish) ]
 
 
 running = True
@@ -69,6 +73,10 @@ while running:
         # draw text
         font_surface = game_font.render('CHOMP',1,(199, 23, 4))
         center_surfaces(screen, font_surface)
+    # draw the score to the screen
+    score_surface = score_font.render(f"{score[0]}", 1, (199, 23, 4))
+    screen.blit(score_surface, (10,10))
+
 
     grenade_group.draw(screen)
     # draw our fish

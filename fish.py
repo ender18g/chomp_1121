@@ -1,7 +1,7 @@
 import random
 import pygame
 class Fish(pygame.sprite.Sprite):
-    def __init__(self,screen):
+    def __init__(self,screen,score):
         super().__init__()
         self.image = pygame.image.load('assets/images/fishTile_079.png')
         self.image = pygame.transform.flip(self.image, 1,0)
@@ -11,15 +11,30 @@ class Fish(pygame.sprite.Sprite):
         self.x = screen.get_width()
         self.rect.y = random.randint(100, screen.get_height())
         self.screen = screen
+        self.dead_timer = 0
+        self.score = score  # SCORE IS A LIST WITH ONE ITEM!
+
 
     def update(self):
         self.x -= self.speed
         if self.x <0:
             self.x = self.screen.get_width()
         self.rect.x = self.x
+
+        # if the fish turned into a skeleton, eventually remove it
+        if self.dead_timer and (pygame.time.get_ticks() - self.dead_timer>1000):
+            self.kill()
+
     def skeleton(self):
         self.image = pygame.image.load('assets/images/fishTile_091.png')
         self.image = pygame.transform.flip(self.image, 1,0)
+        self.dead_timer = pygame.time.get_ticks()
+
+        # update the score with your last dying breath
+        self.score[0] += 1
+        print(self.score)
+
+
 
 
 

@@ -13,6 +13,7 @@ class Grenade(pygame.sprite.Sprite):
         self.boom_time = 0
         self.fish_group = fish_group
         self.kill_radius = 100
+        self.collision_radius = 30
 
     def update(self):
         # grenade moves down
@@ -22,12 +23,17 @@ class Grenade(pygame.sprite.Sprite):
             if pygame.time.get_ticks() - self.boom_time > 1000:
                 # grenade dies
                 self.kill()
+        # check to see if we hit any fish IF we haven't already boomed!
+        if not self.boom_time:
+            self.check_fish_hit()
+
     def boom(self):
         self.boom_time = pygame.time.get_ticks()
         # grenade changes its image
         self.image = pygame.image.load('assets/images/explosion1.png')
         self.velocity = 0
         self.kill_fish()
+
     def kill_fish(self):
         # get our grenade location
         grenade_coord = self.rect.center
@@ -41,11 +47,26 @@ class Grenade(pygame.sprite.Sprite):
                 # turn that fish into a skeleton!
                 fish.skeleton()
 
-
     def get_distance(self, coord1, coord2):
         x1, y1 = coord1
         x2, y2 = coord2
         return sqrt( (x2-x1)**2 + (y2-y1)**2 )
+
+    def get_sprite_distance(self, sprite1, sprite2):
+        coord1 = sprite1.rect.center
+        coord2 = sprite2.rect.center
+        return (self.get_distance(coord1,coord2) < self.collision_radius)
+
+
+    def check_fish_hit(self):
+        # check for collisions with the fish group use spritecollide
+        hit_fish_list = pygame.sprite.spritecollide(self, self.fish_group, 0,  collided=self.get_sprite_distance )
+        # if we find a collision, call fish.skeleton()
+        for f in hit_fish_list:
+            f.skeleton()
+        # boom the grenade if the hit fish list not empty
+        if hit_fish_list:
+            self.boom()
 
 
 
