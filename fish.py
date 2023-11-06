@@ -13,6 +13,7 @@ class Fish(pygame.sprite.Sprite):
         self.screen = screen
         self.dead_timer = 0
         self.score = score  # SCORE IS A LIST WITH ONE ITEM!
+        self.has_scored = 0
 
 
     def update(self):
@@ -30,9 +31,11 @@ class Fish(pygame.sprite.Sprite):
         self.image = pygame.transform.flip(self.image, 1,0)
         self.dead_timer = pygame.time.get_ticks()
 
-        # update the score with your last dying breath
-        self.score[0] += 1
-        print(self.score)
+        # update the score only if you haven't already added to the score
+        if not self.has_scored:
+            self.score[0] += 1
+            self.has_scored = 1
+            print(self.score)
 
 
 

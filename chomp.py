@@ -7,6 +7,10 @@ from grenade import Grenade
 
 # pygame setup
 pygame.init()
+# load a sound
+pygame.mixer.init()
+explosion_sound = pygame.mixer.Sound('assets/sounds/underwater_explosion.wav')
+
 # make a clock
 clock = pygame.time.Clock()
 # set the resolution of our game window
@@ -56,10 +60,11 @@ while running:
                 if len(grenade_group) < 3:
                     grenade_group.add(Grenade(my_boat.rect.midbottom, fish_group))
             if event.key ==pygame.K_SPACE:
+                if len(grenade_group)>0:
+                    # play explosion sound
+                    explosion_sound.play()
                 # spacebar detonates all grenades
                 [g.boom() for g in grenade_group]
-
-
 
     # update my fish
     fish_group.update()

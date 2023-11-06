@@ -34,6 +34,7 @@ class Grenade(pygame.sprite.Sprite):
         self.velocity = 0
         self.kill_fish()
 
+
     def kill_fish(self):
         # get our grenade location
         grenade_coord = self.rect.center
